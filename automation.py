@@ -17,3 +17,5 @@ chrome_browser.execute_script("arguments[0].click();",button)
 
 output_message = chrome_browser.find_element_by_id('display')
 assert 'Hello Student' in output_message.text
+
+#chrome_browser.close()
