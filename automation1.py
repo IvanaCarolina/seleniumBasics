@@ -1,16 +1,26 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 
-chrome_browser = webdriver.Chrome('./chromedriver')
+def test_eight_components():
 
-chrome_browser.maximize_window()
-chrome_browser.get('https://www.google.com.br/')
+    driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
+    
+    driver.maximize_window()
+    driver.get("https://www.google.com.br/")
+    
+    title = driver.title
+    assert title == "Google"
 
-button = chrome_browser.find_element_by_class_name('gNO89b')
-print(button)
+    driver.implicitly_wait(0.5)
 
-user_message = chrome_browser.find_element_by_name('q')
-user_message.clear()
-user_message.send_keys('naruto shippuden online')
+    text_box = driver.find_element(by=By.NAME, value="q")
+    text_box.send_keys("Vita IT")
 
-#webdriver.ActionChains(chrome_browser).move_to_element(button).click(button).perform()
-chrome_browser.execute_script("arguments[0].click();",button)
+    submit_button = driver.find_element(by=By.CLASS_NAME, value="gNO89b")
+    submit_button.click()
+
+    return driver
+
+test_eight_components()
